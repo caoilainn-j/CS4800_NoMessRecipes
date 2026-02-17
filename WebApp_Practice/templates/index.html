@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>No Mess Recipes</title>
+        <style>
+            /* Reset */
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            }
+
+            body {
+                background-color: #cad9f5;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+            }
+
+            .container {
+                background: #c4befc;
+                padding: 40px;
+                border-radius: 12px;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+                width: 100%;
+                max-width: 500px;
+            }
+
+            h1 {
+                font-size: 24px;
+                margin-bottom: 24px;
+                text-align: center;
+                color: #222;
+            }
+
+            .search-row {
+                display: flex;
+                gap: 12px;
+                margin-bottom: 24px;
+            }
+
+            input {
+                flex: 1;
+                padding: 10px 14px;
+                border: 1px solid #d2c8fe;
+                border-radius: 8px;
+                font-size: 14px;
+                transition: border 0.2s ease;
+            }
+
+            input:focus {
+                outline: none;
+                border-color: #4f46e5;
+            }
+
+            button {
+                padding: 10px 18px;
+                background-color: #4f46e5;
+                color: white;
+                border: none;
+                border-radius: 8px;
+                font-size: 14px;
+                cursor: pointer;
+                transition: background 0.2s ease;
+            }
+
+            button:hover {
+                background-color: #4338ca;
+            }
+
+            ul {
+                list-style: none;
+            }
+
+            li {
+                padding: 10px 12px;
+                border-bottom: 1px solid #d0c7f0;
+                font-size: 14px;
+                color: #333;
+            }
+
+            li:last-child {
+                border-bottom: none;
+            }
+
+            #result_list li img{
+                width: 64px;
+                height: 64px;
+                flex: 0 0 64px;
+                border-radius: 10px;
+                object-fit: cover;
+                background: #4f46e5;
+                border: 1px solid var(--border);
+            }
+
+            #result_list li{
+                display: flex;
+                justify-content: space-between;
+            }
+
+        </style>
+
+        <body>
+            <div class="container">
+                <h1>Welcome to No Mess Recipes!</h1>
+
+                <div class="search-row">
+                    <input id="time_input" type="text" placeholder="Enter max cooking time (minutes)">
+                    <button onclick="search()">Search</button>
+                </div>
+
+                <ul id="result_list"></ul>
+            </div>
+        </body>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script>
+            function search() {
+                // 1. grab time limit
+                console.log("Button is clicked");
+                var time = $("#time_input").val();
+                console.log("Time limit:" + time)
+
+                // 2. call the backend server URL /search/<time> to get results
+                $.ajax({
+                    url: `/search/${encodeURIComponent(time)}`,
+                    method: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        console.log("Success:", data);
+                        $("#result_list").empty()
+                        for(var i = 0; i < data.length; i++) {
+                            console.log("test:" + data[i].item) 
+                            console.log("test:" + data[i].time) 
+                            // if no results are found with that time limit
+                            if(data[i] == "No results found") {
+                                $("#result_list").append("<li>" + data[i] + "</li>")
+                            }
+                            else {
+                                $("#result_list").append("<li>" 
+                                + data[i].item + ": " + data[i].time 
+                                + " minutes" +
+                                "<img src='" + data[i].image_url + "''></img>" +
+                                "</li>")
+                            }
+                        }
+                        
+                        
+                        
+                            
+                    },
+                    error: function(xhr, status, err) {
+                        console.error("Error:", status, err, xhr.responseText)
+                    }
+                });
+            }
+
+            
+        </script>
+    </head>
+</html>
