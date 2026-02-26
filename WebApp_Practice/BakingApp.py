@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from pymongo import MongoClient
 
 # remember to put in password before running / connecting to DB
-MONGODB_URI = "mongodb+srv://caoilainnjohnsson_db_user:<password>@bakingapp-db.js1wajy.mongodb.net/?appName=BakingApp-db"
+MONGODB_URI = "mongodb+srv://caoilainnjohnsson_db_user:CS380026@bakingapp-db.js1wajy.mongodb.net/?appName=BakingApp-db"
 client = MongoClient(MONGODB_URI)
 
 db = client["BakingApp"]
