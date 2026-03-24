@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>No Mess Recipes</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/base.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/layout.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/components.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/pages.css') }}" />
+
+    <script type="module" defer src="{{ url_for('static', filename='js/app.js') }}"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#/">No Mess Recipes</a>
+
+      <nav class="nav">
+        <a href="#/">Home</a>
+        <a href="#/browse">Browse</a>
+        <a href="#/create">Share</a>
+        <a href="#/profile">Profile</a>
+      </nav>
+
+      <div class="topbar__actions">
+        <input id="searchInput" class="input" placeholder="Search recipes…" />
+        <button id="authButton" class="btn btn--primary">Sign in</button>
+      </div>
+    </header>
+
+    <main id="app" class="container" aria-live="polite"></main>
+    <div id="toastRoot" class="toast-root" aria-live="assertive"></div>
+  </body>
+</html>
